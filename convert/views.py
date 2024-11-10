@@ -14,9 +14,7 @@ class ConvertImagesView(APIView):
     permission_classes = [permissions.AllowAny]
 
     def get(self, request, format=None):
-        images = ConvertImages.objects.all()
-        serializer = ConvertImagesSerializer(images, many=True)
-        return Response(serializer.data)
+        return Response("Send with POST", status=status.HTTP_400_BAD_REQUEST)
 
     def post(self, request, format=None):
         serializer = ConvertImagesSerializer(data=request.data)
