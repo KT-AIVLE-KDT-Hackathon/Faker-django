@@ -7,6 +7,8 @@ from rest_framework import permissions
 
 from .serializers import ConvertImagesSerializer
 
+from modules.faker.adversarial_image import generate_adversarial_image
+
 
 # Create your views here.
 class ConvertImagesView(APIView):
@@ -18,6 +20,9 @@ class ConvertImagesView(APIView):
     def post(self, request, format=None):
         serializer = ConvertImagesSerializer(data=request.data)
         if serializer.is_valid():
-            image = request.data["image"].file
-            return FileResponse(image, status=status.HTTP_200_OK)
+            image = bytes(request.data["image"].file.read())
+            files = generate_adversarial_image(image)
+            files.seek(0)
+
+            return FileResponse(files, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
