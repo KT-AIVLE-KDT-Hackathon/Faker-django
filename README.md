@@ -5,7 +5,7 @@
 ### Commands
 ```bash
 # Create and activate environment for tensorflow
-conda create -n <env_name> python">=3.12"
+conda create -n <env_name> python=3.12
 conda activate <env_name>
 
 # Install model and django requirements
